@@ -1,0 +1,64 @@
+.add-movie-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.add-movie__form{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+.add-movie__label{
+  font-size: 2.4rem;
+  color: #00838f;
+  margin-bottom: 3px;
+}
+
+.add-movie__title{
+  font-size: 2rem;
+  margin-bottom: 30px;
+  border: 1px solid #BDBDBD;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.20);
+}
+.add-movie__description{
+  resize: none;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  border: 1px solid #BDBDBD;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.20);
+}
+.add-movie__director{
+  font-size: 2rem;
+  margin-bottom: 30px;
+  border: 1px solid #BDBDBD;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.20);
+}
+.add-movie__rating{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2.4rem;
+  color: #00838f;
+  margin-bottom: 30px;
+}
+.add-movie__submit-btn{
+  align-self: flex-end;
+  font-size: 2rem;
+  border: 0;
+  padding: 5px 15px 5px 15px;
+  border-radius: 5px;
+  background: #2E7D32;
+  color: #fff;
+  cursor: pointer;
+}
+.add-movie__submit-btn:hover{
+  background: #388E3C;
+}
+span{
+
+}
