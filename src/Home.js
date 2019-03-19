@@ -52,14 +52,14 @@ class Home extends Component {
   filterMovies(){
     return this.state.movies.filter((movie) => {
       let movieRating = JSON.stringify(movie.rating);
-      if(movie.title.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterTitle ||
-      movie.director.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterDirector ||
-      movieRating.includes(this.state.search) && this.state.filterRating ||
-      !this.state.filterTitle && !this.state.filterDirector && !this.state.filterRating){
+      if((movie.title.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterTitle) ||
+      (movie.director.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterDirector) ||
+      (movieRating.includes(this.state.search) && this.state.filterRating) ||
+      (!this.state.filterTitle && !this.state.filterDirector && !this.state.filterRating)){
         return movie;
       }
       else {
-        return;
+        return null;
       }
     })
   }
