@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Details.css'
 import { Redirect } from 'react-router-dom';
-
+import { Helmet } from 'react-helmet';
 class Details extends Component {
   constructor(props){
     super(props);
@@ -29,6 +29,9 @@ class Details extends Component {
     }
     return (
       <div className='details'>
+        <Helmet>
+          <title>{this.state.movie.title}</title>
+        </Helmet>
         <div className='details-wrapper'>
           <h1 className='details__title'>{this.state.movie.title}</h1>
           <span className='details__subtext'>Rating</span>

@@ -72,13 +72,13 @@ class Add extends Component{
           <form className='add-movie__form' onSubmit={this.onFormSubmit}>
             <label className='add-movie__label'>Title</label>
             <input className='add-movie__title' ref={this.titleRef} onChange={this.onTitleChange} type='text' minLength='1' maxLength='40'></input>
+            <label className='add-movie__label'>Rating</label>
+            <input className='add-movie__rating-input' onChange={this.onRatingChange} type='range' min='0' max='5' step='0.1' value={this.state.rating}></input>
+            <span className='add-movie__rating'>{this.state.rating}</span>
             <label className='add-movie__label'>Description</label>
             <textarea className='add-movie__description' ref={this.descriptionRef} onChange={this.onDescriptionChange} rows='8' minLength='1' maxLength='300'></textarea>
             <label className='add-movie__label'>Director</label>
             <input className='add-movie__director' ref={this.directorRef} onChange={this.onDirectorChange} type='text' minLength='1' maxLength='40'></input>
-            <label className='add-movie__label'>Rating</label>
-            <input className='add-movie__rating-input' onChange={this.onRatingChange} type='range' min='0' max='5' step='0.1' value={this.state.rating}></input>
-            <span className='add-movie__rating'>{this.state.rating}</span>
             <button className='add-movie__submit-btn'>Add</button>
           </form>
         </div>
