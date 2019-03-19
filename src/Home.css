@@ -1,7 +1,9 @@
+
 .movie-table-container{
   display: flex;
-  justify-content: center;
-  margin-top: 50px;
+  flex-direction: column;
+  align-items: center;
+  /* margin-top: 50px; */
   min-height: 100%;
   width: 100%;
   /* min-height: calc(100% - 60px); */
@@ -32,32 +34,44 @@ tr{
 .movie-table__td{
   font-size: 2rem;
   padding: 20px 10px 20px 10px;
+  background: #fff;
 }
-.movie-table__btn{
-  border: none;
-  font-size: 1.8rem;
-  padding: 5px 10px 5px 10px;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0 3px 0 3px;
+.movie-table__empty-td{
+  width: 70px;
+  background: #fff;
+}
+.movie-table__link{
+  font-size: 2rem;
+  color: #006064;
   text-decoration: none;
 }
-.movie-table__btn-details{
-  background: #00796B;
+.movie-table__link:hover{
+  color:#00838f;
 }
-.movie-table__btn-details:hover{
-  background: #00897B;
+.movie-table__btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  height: 40px;
+  width: 40px;
+  font-size: 1.8rem;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 3px 0 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+
 .movie-table__btn-edit{
-  background: #2E7D32;
+  background: #1B5E20;
 }
 .movie-table__btn-edit:hover{
-  background: #388E3C;
+  background: #2E7D32;
 }
 .movie-table__btn-delete{
-  background: #C62828;
+  background: #B71C1C;
 }
 .movie-table__btn-delete:hover{
-  background: #D32F2F;
+  background: #C62828;
 }

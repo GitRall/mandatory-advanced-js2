@@ -23,7 +23,43 @@
   box-shadow: 0 0 2px rgba(0,0,0,0.20);
 }
 .add-movie__rating-input{
-  
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 15px;
+  /* background: #BDBDBD; */
+
+  background-color: rgba(0,0,0,0.1);
+  transition: background-color 0.2s linear;
+}
+.add-movie__rating-input:hover{
+  background-color: rgba(0,0,0,0.2);
+}
+.add-movie__rating-input:focus{
+  background-color: rgba(0,0,0,0.2);
+}
+.add-movie__rating-input::-ms-fill-lower{
+  background-color: black;
+}
+.add-movie__rating-input::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #006064;
+  cursor: pointer;
+}
+.add-movie__rating-input::-moz-range-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #006064;
+  cursor: pointer;
 }
 .add-movie__description{
   resize: none;

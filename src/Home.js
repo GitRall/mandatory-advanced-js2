@@ -3,13 +3,20 @@ import './Home.css'
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import Search from './Search';
 
 class Home extends Component {
   constructor(props){
     super(props);
-    this.state = {movies: []}
+    this.state = {movies: [], search: '', filterTitle: true, filterDirector: true, filterRating: true}
     this.CancelToken = axios.CancelToken;
     this.source = this.CancelToken.source();
+    this.onSearch = this.onSearch.bind(this);
+    this.filterMovies = this.filterMovies.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
+    this.filterTitleRef = React.createRef();
+    this.filterDirectorRef = React.createRef();
+    this.filterRatingRef = React.createRef();
   }
 
   componentDidMount(){
@@ -39,31 +46,54 @@ class Home extends Component {
       console.log(thrown);
     })
   }
+  onSearch(e){
+    this.setState({search: e.target.value});
+  }
+  filterMovies(){
+    return this.state.movies.filter((movie) => {
+      let movieRating = JSON.stringify(movie.rating);
+      if(movie.title.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterTitle ||
+      movie.director.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterDirector ||
+      movieRating.includes(this.state.search) && this.state.filterRating ||
+      !this.state.filterTitle && !this.state.filterDirector && !this.state.filterRating){
+        return movie;
+      }
+      else {
+        return;
+      }
+    })
+  }
+  onFilterChange(e){
+    this.filterTitleRef.current.checked ? (this.setState({filterTitle: true})) : (this.setState({filterTitle: false}));
+    this.filterDirectorRef.current.checked ? (this.setState({filterDirector: true})) : (this.setState({filterDirector: false}));
+    this.filterRatingRef.current.checked ? (this.setState({filterRating: true})) : (this.setState({filterRating: false}));
+  }
   render(){
-    const moviesArray = this.state.movies.map((movie) => {
+    const moviesArray = this.filterMovies().map((movie) => {
       return(
         <tr key={movie.id}>
-          <td className='movie-table__td'>{movie.title}</td>
+          <td className='movie-table__td'><Link to={`/details/${movie.id}`} className='movie-table__link'>{movie.title}</Link></td>
           <td className='movie-table__td'>{movie.director}</td>
           <td className='movie-table__td'>{movie.rating}</td>
-          <td><Link to={`/details/${movie.id}`} className='movie-table__btn movie-table__btn-details'>Details</Link></td>
-          <td><button className='movie-table__btn movie-table__btn-edit'>Edit</button></td>
-          <td><button className='movie-table__btn movie-table__btn-delete' onClick={(e) => {this.deleteMovie(movie.id)}}>Delete</button></td>
+          <td className='movie-table__empty-td'><button className='movie-table__btn movie-table__btn-edit'><i className="material-icons">edit</i></button></td>
+          <td className='movie-table__empty-td'><button className='movie-table__btn movie-table__btn-delete' onClick={(e) => {this.deleteMovie(movie.id)}}><i className="material-icons">delete</i></button></td>
         </tr>
       )
     })
     return(
+      <>
+      <Search onSearch={this.onSearch} onFilterChange={this.onFilterChange} filterTitleRef={this.filterTitleRef} filterDirectorRef={this.filterDirectorRef} filterRatingRef={this.filterRatingRef}></Search>
       <div className='movie-table-container'>
         <Helmet>
           <title>Home</title>
         </Helmet>
+
         <table>
           <thead>
             <tr>
               <th className='movie-table__th'>Title</th>
               <th className='movie-table__th'>Director</th>
               <th className='movie-table__th'>Rating</th>
-              <th className='movie-table__th'></th>
               <th className='movie-table__th'></th>
               <th className='movie-table__th'></th>
             </tr>
@@ -73,6 +103,7 @@ class Home extends Component {
           </tbody>
         </table>
       </div>
+      </>
     )
   }
 }
