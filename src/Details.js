@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Details.css'
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 class Details extends Component {
   constructor(props){
@@ -11,15 +11,12 @@ class Details extends Component {
   componentDidMount(){
     axios.get(`http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${this.props.match.params.id}`)
     .then((res) => {
-      console.log(res.data);
       this.setState({movie: res.data})
-      console.log(this.state);
     })
     .catch((thrown) => {
       this.setState({redirectHome: true});
       console.log(thrown);
     })
-    console.log(this.props.match.params.id);
   }
   render(){
     if(this.state.redirectHome){
@@ -27,19 +24,31 @@ class Details extends Component {
         <Redirect to='/' />
       )
     }
+    const ratingFloor = Math.floor(this.state.movie.rating);
+    const starArr = [];
+    for(let i = 0; i < ratingFloor; i++){
+      starArr.push(<i key={i} className="material-icons">star</i>);
+    }
     return (
       <div className='details'>
         <Helmet>
           <title>{this.state.movie.title}</title>
         </Helmet>
         <div className='details-wrapper'>
-          <h1 className='details__title'>{this.state.movie.title}</h1>
-          <span className='details__subtext'>Rating</span>
-          <p className='details__rating'>{this.state.movie.rating} / 5</p>
-          <span className='details__subtext'>Director</span>
-          <p className='details__director'>{this.state.movie.director}</p>
-          <span className='details__subtext'>Description</span>
-          <p className='details__description'>{this.state.movie.description}</p>
+          <div className='details__header'>
+            <h1 className='details__title'>{this.state.movie.title}</h1>
+          </div>
+          <div className='details__rating-wrapper'>
+            <p className='details__rating'>{this.state.movie.rating} / 5</p>
+            <span className='details__stars'>{starArr}</span>
+          </div>
+          <div className='details__content-wrapper'>
+            <span className='details__subtext'>Director</span>
+            <p className='details__director'>{this.state.movie.director}</p>
+            <span className='details__subtext'>Description</span>
+            <p className='details__description'>{this.state.movie.description}</p>
+            <Link className='details__edit-link' to={{pathname: `/edit/${this.props.match.params.id}`, state: this.state.movie}}>Edit</Link>
+          </div>
         </div>
       </div>
     )

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import './Add.css';
+import './AddEdit.css';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 
 class Add extends Component{
   constructor(props){
     super(props);
-    this.state = {title: '', description: '', director: '', rating: 0, redirectRef: false}
+    this.state = {title: '', description: '', director: '', rating: 0, redirectRef: false, titleErrorText: false, descriptionErrorText: false, directorErrorText: false}
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
     this.onDirectorChange = this.onDirectorChange.bind(this);
@@ -16,17 +16,29 @@ class Add extends Component{
     this.titleRef = React.createRef();
     this.descriptionRef = React.createRef();
     this.directorRef = React.createRef();
-    this.CancelToken = axios.CancelToken;
-    this.source = this.CancelToken.source();
+    this.source = axios.CancelToken.source();
   }
   componentWillUnmount(){
     this.source.cancel('Data request canceled');
   }
   onFormSubmit(e){
     e.preventDefault();
-    if(this.titleRef.current.value.length < 1 || this.titleRef.current.value.length > 40) return;
-    else if(this.descriptionRef.current.value.length < 1 || this.descriptionRef.current.value.length > 300) return;
-    else if(this.directorRef.current.value.length < 1 || this.directorRef.current.value.length > 40) return;
+    this.setState({titleErrorText: false, descriptionErrorText: false, directorErrorText: false});
+    if(this.state.title.length < 1 || this.state.title.length > 40) {
+      this.setState({titleErrorText: true});
+      this.titleRef.current.focus();
+      return;
+    }
+    else if(this.state.description.length < 1 || this.state.description.length > 300) {
+      this.setState({descriptionErrorText: true});
+      this.descriptionRef.current.focus();
+      return;
+    }
+    else if(this.state.director.length < 1 || this.state.director.length > 40) {
+      this.setState({directorErrorText: true});
+      this.directorRef.current.focus();
+      return;
+    }
     else{
       const data = {
         title: this.state.title,
@@ -63,23 +75,63 @@ class Add extends Component{
         <Redirect to='/' />
       )
     }
-    else{
+    const ratingFloor = Math.floor(this.state.rating);
+    console.log(ratingFloor);
+    const starArr = []
+    for(let i = 0; i < ratingFloor; i++){
+      starArr.push(<i key={i} className="material-icons">star</i>);
+    }
+    console.log(starArr);
+    if(this.state.titleErrorText || this.state.descriptionErrorText || this.state.directorErrorText){
       return (
-        <div className='add-movie-container'>
+        <div className='add-edit-movie-container'>
           <Helmet>
             <title>Add Movie</title>
           </Helmet>
-          <form className='add-movie__form' onSubmit={this.onFormSubmit}>
-            <label className='add-movie__label'>Title</label>
-            <input className='add-movie__title' ref={this.titleRef} onChange={this.onTitleChange} type='text' minLength='1' maxLength='40'></input>
-            <label className='add-movie__label'>Rating</label>
-            <input className='add-movie__rating-input' onChange={this.onRatingChange} type='range' min='0' max='5' step='0.1' value={this.state.rating}></input>
-            <span className='add-movie__rating'>{this.state.rating}</span>
-            <label className='add-movie__label'>Description</label>
-            <textarea className='add-movie__description' ref={this.descriptionRef} onChange={this.onDescriptionChange} rows='8' minLength='1' maxLength='300'></textarea>
-            <label className='add-movie__label'>Director</label>
-            <input className='add-movie__director' ref={this.directorRef} onChange={this.onDirectorChange} type='text' minLength='1' maxLength='40'></input>
-            <button className='add-movie__submit-btn'>Add</button>
+          <form className='add-edit-movie__form' onSubmit={this.onFormSubmit}>
+            <label className='add-edit-movie__label'>Title
+              <input className='add-edit-movie__title' ref={this.titleRef} onChange={this.onTitleChange} type='text' minLength='1' maxLength='40'></input>
+
+              {this.state.titleErrorText ? <p className='add-edit-movie__error-text'>Must contain 1 - 40 characters</p> : null}
+            </label>
+            <label className='add-edit-movie__label'>Rating
+              <input className='add-edit-movie__rating-input' onChange={this.onRatingChange} type='range' min='0' max='5' step='0.1' value={this.state.rating}></input>
+              <span className='add-edit-movie__rating'><span className='add-edit-movie__stars'>{starArr}</span>{this.state.rating}</span>
+            </label>
+            <label className='add-edit-movie__label'>Description
+              <textarea className='add-edit-movie__description' ref={this.descriptionRef} onChange={this.onDescriptionChange} rows='8' minLength='1' maxLength='300'></textarea>
+              {this.state.descriptionErrorText ? <p className='add-edit-movie__error-text'>Must contain 1 - 300 characters</p> : null}
+            </label>
+            <label className='add-edit-movie__label'>Director
+              <input className='add-edit-movie__director' ref={this.directorRef} onChange={this.onDirectorChange} type='text' minLength='1' maxLength='40'></input>
+              {this.state.directorErrorText ? <p className='add-edit-movie__error-text'>Must contain 1 - 40 characters</p> : null}
+            </label>
+            <button className='add-edit-movie__submit-btn'>Add movie</button>
+          </form>
+        </div>
+      )
+    }
+    else{
+      return (
+        <div className='add-edit-movie-container'>
+          <Helmet>
+            <title>Add Movie</title>
+          </Helmet>
+          <form className='add-edit-movie__form' onSubmit={this.onFormSubmit}>
+            <label className='add-edit-movie__label'>Title
+              <input className='add-edit-movie__title' ref={this.titleRef} onChange={this.onTitleChange} type='text' minLength='1' maxLength='40'></input>
+            </label>
+            <label className='add-edit-movie__label'>Rating
+              <input className='add-edit-movie__rating-input' onChange={this.onRatingChange} type='range' min='0' max='5' step='0.1' value={this.state.rating}></input>
+              <span className='add-edit-movie__rating'><span className='add-edit-movie__stars'>{starArr}</span>{this.state.rating}</span>
+            </label>
+            <label className='add-edit-movie__label'>Description
+              <textarea className='add-edit-movie__description' ref={this.descriptionRef} onChange={this.onDescriptionChange} rows='8' minLength='1' maxLength='300'></textarea>
+            </label>
+            <label className='add-edit-movie__label'>Director
+              <input className='add-edit-movie__director' ref={this.directorRef} onChange={this.onDirectorChange} type='text' minLength='1' maxLength='40'></input>
+            </label>
+            <button className='add-edit-movie__submit-btn'>Add movie</button>
           </form>
         </div>
       )

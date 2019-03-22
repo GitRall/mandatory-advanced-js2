@@ -9,8 +9,7 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {movies: [], search: '', filterTitle: true, filterDirector: true, filterRating: true}
-    this.CancelToken = axios.CancelToken;
-    this.source = this.CancelToken.source();
+    this.source = axios.CancelToken.source();
     this.onSearch = this.onSearch.bind(this);
     this.filterMovies = this.filterMovies.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
@@ -54,8 +53,7 @@ class Home extends Component {
       let movieRating = JSON.stringify(movie.rating);
       if((movie.title.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterTitle) ||
       (movie.director.toLowerCase().includes(this.state.search.toLowerCase()) && this.state.filterDirector) ||
-      (movieRating.includes(this.state.search) && this.state.filterRating) ||
-      (!this.state.filterTitle && !this.state.filterDirector && !this.state.filterRating)){
+      (movieRating.includes(this.state.search) && this.state.filterRating)){
         return movie;
       }
       else {
@@ -69,17 +67,43 @@ class Home extends Component {
     this.filterRatingRef.current.checked ? (this.setState({filterRating: true})) : (this.setState({filterRating: false}));
   }
   render(){
+
     const moviesArray = this.filterMovies().map((movie) => {
       return(
         <tr key={movie.id}>
           <td className='movie-table__td'><Link to={`/details/${movie.id}`} className='movie-table__link'>{movie.title}</Link></td>
           <td className='movie-table__td'>{movie.director}</td>
           <td className='movie-table__td'>{movie.rating}</td>
-          <td className='movie-table__empty-td'><button className='movie-table__btn movie-table__btn-edit'><i className="material-icons">edit</i></button></td>
-          <td className='movie-table__empty-td'><button className='movie-table__btn movie-table__btn-delete' onClick={(e) => {this.deleteMovie(movie.id)}}><i className="material-icons">delete</i></button></td>
+          <td className='movie-table__icon-td'><Link to={{pathname:`/edit/${movie.id}`, state: movie}} className='movie-table__btn movie-table__btn-edit'><i className="material-icons">edit</i></Link></td>
+          <td className='movie-table__icon-td'><button className='movie-table__btn movie-table__btn-delete' onClick={(e) => {this.deleteMovie(movie.id)}}><i className="material-icons">delete</i></button></td>
         </tr>
       )
     })
+
+    if(moviesArray.length < 1){
+      return(
+        <>
+        <Search onSearch={this.onSearch} onFilterChange={this.onFilterChange} filterTitleRef={this.filterTitleRef} filterDirectorRef={this.filterDirectorRef} filterRatingRef={this.filterRatingRef}></Search>
+        <div className='movie-table-container'>
+          <Helmet>
+            <title>Home</title>
+          </Helmet>
+          <table className='movie-table'>
+            <thead>
+              <tr>
+                <th className='movie-table__th'>Title</th>
+                <th className='movie-table__th'>Director</th>
+                <th className='movie-table__th'>Rating</th>
+                <th className='movie-table__th'></th>
+                <th className='movie-table__th'></th>
+              </tr>
+            </thead>
+          </table>
+          <span className='movie-table-container__no-movies'>No movies found</span>
+        </div>
+        </>
+    )
+    }
     return(
       <>
       <Search onSearch={this.onSearch} onFilterChange={this.onFilterChange} filterTitleRef={this.filterTitleRef} filterDirectorRef={this.filterDirectorRef} filterRatingRef={this.filterRatingRef}></Search>
@@ -88,7 +112,7 @@ class Home extends Component {
           <title>Home</title>
         </Helmet>
 
-        <table>
+        <table className='movie-table'>
           <thead>
             <tr>
               <th className='movie-table__th'>Title</th>
