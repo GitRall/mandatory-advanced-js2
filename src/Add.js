@@ -48,7 +48,6 @@ class Add extends Component{
       }
       axios.post('http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies', data, {cancelToken: this.source.token})
       .then((response) => {
-        console.log(response);
         this.setState({redirectRef: true});
       })
       .catch((thrown) => {
@@ -76,12 +75,10 @@ class Add extends Component{
       )
     }
     const ratingFloor = Math.floor(this.state.rating);
-    console.log(ratingFloor);
     const starArr = []
     for(let i = 0; i < ratingFloor; i++){
       starArr.push(<i key={i} className="material-icons">star</i>);
     }
-    console.log(starArr);
     if(this.state.titleErrorText || this.state.descriptionErrorText || this.state.directorErrorText){
       return (
         <div className='add-edit-movie-container'>

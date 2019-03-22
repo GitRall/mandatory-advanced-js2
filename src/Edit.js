@@ -81,7 +81,6 @@ class Edit extends Component {
       )
     }
     const ratingFloor = Math.floor(this.state.rating);
-    console.log(ratingFloor);
     const starArr = []
     for(let i = 0; i < ratingFloor; i++){
       starArr.push(<i key={i} className="material-icons">star</i>);
