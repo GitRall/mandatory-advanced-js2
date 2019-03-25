@@ -97,7 +97,7 @@ class Edit extends Component {
       return (
         <div className='add-edit-movie-container'>
           <Helmet>
-            <title>{this.state.title} - edit</title>
+            <title>{this.props.location.state.title} - edit</title>
           </Helmet>
           <form className='add-edit-movie__form' onSubmit={this.onEditSubmit}>
             <label className='add-edit-movie__label'>Title
@@ -124,7 +124,7 @@ class Edit extends Component {
     return (
       <div className='add-edit-movie-container'>
         <Helmet>
-          <title>{this.state.title} - edit</title>
+          <title>{this.props.location.state.title} - edit</title>
         </Helmet>
         <form className='add-edit-movie__form' onSubmit={this.onEditSubmit}>
           <label className='add-edit-movie__label'>Title
