@@ -35,7 +35,7 @@
 .movie-table__td:first-child{
   border-radius: 5px 0 0 5px;
 }
-.movie-table__empty-td:last-child{
+.movie-table__icon-td:last-child{
   border-radius: 0 5px 5px 0;
 }
 .movie-table__td{
