@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-
+import Stars from './Stars';
 class Edit extends Component {
   constructor(props){
     super(props);
@@ -88,11 +88,7 @@ class Edit extends Component {
         <Redirect to={`/details/${this.props.match.params.id}`}></Redirect>
       )
     }
-    const ratingFloor = Math.floor(this.state.rating);
-    const starArr = []
-    for(let i = 0; i < ratingFloor; i++){
-      starArr.push(<i key={i} className="material-icons">star</i>);
-    }
+
     if(this.state.titleErrorText || this.state.descriptionErrorText || this.state. directorErrorText){
       return (
         <div className='add-edit-movie-container'>
@@ -106,7 +102,7 @@ class Edit extends Component {
             </label>
             <label className='add-edit-movie__label'>Rating
               <input className='add-edit-movie__rating-input' type='range' min='0' max='5' step='0.1' value={this.state.rating} onChange={this.onRatingChange}></input>
-              <span className='add-edit-movie__rating'>{this.state.rating}</span>
+              <span className='add-edit-movie__rating'><Stars rating={this.state.rating} starClass='add-edit-movie__stars'/>{this.state.rating}</span>
             </label>
             <label className='add-edit-movie__label'>Description
               <textarea className='add-edit-movie__description' ref={this.descriptionRef} rows='8' minLength='1' maxLength='300' value={this.state.description} onChange={this.onDescriptionChange}></textarea>
@@ -132,7 +128,7 @@ class Edit extends Component {
           </label>
           <label className='add-edit-movie__label'>Rating
             <input className='add-edit-movie__rating-input' type='range' min='0' max='5' step='0.1' value={this.state.rating} onChange={this.onRatingChange}></input>
-            <span className='add-edit-movie__rating'><span className='add-edit-movie__stars'>{starArr}</span>{this.state.rating}</span>
+            <span className='add-edit-movie__rating'><Stars rating={this.state.rating} starClass='add-edit-movie__stars'/>{this.state.rating}</span>
           </label>
           <label className='add-edit-movie__label'>Description
             <textarea className='add-edit-movie__description' ref={this.descriptionRef} rows='8' minLength='1' maxLength='300' value={this.state.description} onChange={this.onDescriptionChange}></textarea>

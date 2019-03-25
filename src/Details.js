@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Details.css'
 import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Stars from './Stars';
+
 class Details extends Component {
   constructor(props){
     super(props);
@@ -24,11 +26,7 @@ class Details extends Component {
         <Redirect to='/' />
       )
     }
-    const ratingFloor = Math.floor(this.state.movie.rating);
-    const starArr = [];
-    for(let i = 0; i < ratingFloor; i++){
-      starArr.push(<i key={i} className="material-icons">star</i>);
-    }
+
     return (
       <div className='details'>
         <Helmet>
@@ -40,7 +38,7 @@ class Details extends Component {
           </div>
           <div className='details__rating-wrapper'>
             <p className='details__rating'>{this.state.movie.rating} / 5</p>
-            <span className='details__stars'>{starArr}</span>
+            <Stars rating={this.state.movie.rating} starClass='details__stars'/>
           </div>
           <div className='details__content-wrapper'>
             <span className='details__subtext'>Director</span>
