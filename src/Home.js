@@ -13,6 +13,7 @@ class Home extends Component {
     this.onSearch = this.onSearch.bind(this);
     this.filterMovies = this.filterMovies.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
+    this.deleteFunc = this.deleteFunc.bind(this);
     this.filterTitleRef = React.createRef();
     this.filterDirectorRef = React.createRef();
     this.filterRatingRef = React.createRef();
@@ -30,19 +31,25 @@ class Home extends Component {
   componentWillUnmount(){
     this.source.cancel('Data request canceled');
   }
+  deleteFunc(id){
+    for(let i = 0; i < this.state.movies.length; i++){
+      if(this.state.movies[i].id === id){
+        let movies = this.state.movies;
+        movies.splice(i, 1);
+        this.setState({movies});
+        break;
+      }
+    }
+  }
   deleteMovie(id){
     axios.delete(`http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${id}`, {cancelToken: this.source.token})
     .then((res) => {
-      for(let i = 0; i < this.state.movies.length; i++){
-        if(this.state.movies[i].id === id){
-          let movies = this.state.movies;
-          movies.splice(i, 1);
-          this.setState({movies});
-        }
-      }
+      this.deleteFunc(id);
     })
     .catch((thrown) => {
-      console.log(thrown);
+      if (thrown.response && thrown.response.status === 404) {
+        this.deleteFunc(id);
+      }
     })
   }
   onSearch(e){

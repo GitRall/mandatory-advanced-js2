@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 class Edit extends Component {
   constructor(props){
     super(props);
-    this.state = {title: '', rating: 0, description: '', director: '', redirectDetails: false, titleErrorText: false, descriptionErrorText: false, directorErrorText: false}
+    this.state = {title: '', rating: 0, description: '', director: '', redirectDetails: false, redirectHome: false, titleErrorText: false, descriptionErrorText: false, directorErrorText: false}
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onRatingChange = this.onRatingChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
@@ -71,11 +71,19 @@ class Edit extends Component {
       this.setState({redirectDetails: true});
     })
     .catch((thrown) => {
+      if(thrown.response && thrown.response.status === 404){
+        this.setState({redirectHome: true});
+      }
       console.log(thrown);
     })
   }
   render(){
-    if(this.state.redirectDetails){
+    if(this.state.redirectHome){
+      return (
+        <Redirect to='/'></Redirect>
+      )
+    }
+    else if(this.state.redirectDetails){
       return(
         <Redirect to={`/details/${this.props.match.params.id}`}></Redirect>
       )

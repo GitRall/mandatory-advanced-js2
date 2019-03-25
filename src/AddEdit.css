@@ -1,7 +1,7 @@
 .add-edit-movie-container{
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
 }
 .add-edit-movie__form{
   display: flex;
