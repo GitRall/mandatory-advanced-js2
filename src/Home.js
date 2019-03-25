@@ -32,14 +32,10 @@ class Home extends Component {
     this.source.cancel('Data request canceled');
   }
   deleteFunc(id){
-    for(let i = 0; i < this.state.movies.length; i++){
-      if(this.state.movies[i].id === id){
-        let movies = this.state.movies;
-        movies.splice(i, 1);
-        this.setState({movies});
-        break;
-      }
-    }
+    let index = this.state.movies.findIndex(x => x.id === id);
+    let movies = [...this.state.movies];
+    movies.splice(index, 1);
+    this.setState({movies});
   }
   deleteMovie(id){
     axios.delete(`http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${id}`, {cancelToken: this.source.token})
