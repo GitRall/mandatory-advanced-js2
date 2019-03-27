@@ -52,10 +52,7 @@
 .details__rating{
   font-size: 2rem;
   color: #fff;
-}
-.details__stars{
-  color: #FDD835;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 .details__edit-link{
   font-size: 2rem;

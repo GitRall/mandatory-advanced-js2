@@ -38,7 +38,7 @@ class Details extends Component {
           </div>
           <div className='details__rating-wrapper'>
             <p className='details__rating'>{this.state.movie.rating} / 5</p>
-            <Stars rating={this.state.movie.rating} starClass='details__stars'/>
+            <Stars rating={this.state.movie.rating} color='#FDD835'/>
           </div>
           <div className='details__content-wrapper'>
             <span className='details__subtext'>Director</span>

@@ -7,7 +7,7 @@ const Stars = (props) => {
     starArr.push(<i key={i} className="material-icons">star</i>);
   }
   return(
-    <span className={props.starClass}>
+    <span style={{color: props.color}}>
       {starArr}
     </span>
   )

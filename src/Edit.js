@@ -102,7 +102,7 @@ class Edit extends Component {
             </label>
             <label className='add-edit-movie__label'>Rating
               <input className='add-edit-movie__rating-input' type='range' min='0' max='5' step='0.1' value={this.state.rating} onChange={this.onRatingChange}></input>
-              <span className='add-edit-movie__rating'><Stars rating={this.state.rating} starClass='add-edit-movie__stars'/>{this.state.rating}</span>
+              <span className='add-edit-movie__rating'><Stars rating={this.state.rating} color='#F9A825'/>{this.state.rating}</span>
             </label>
             <label className='add-edit-movie__label'>Description
               <textarea className='add-edit-movie__description' ref={this.descriptionRef} rows='8' minLength='1' maxLength='300' value={this.state.description} onChange={this.onDescriptionChange}></textarea>
@@ -128,7 +128,7 @@ class Edit extends Component {
           </label>
           <label className='add-edit-movie__label'>Rating
             <input className='add-edit-movie__rating-input' type='range' min='0' max='5' step='0.1' value={this.state.rating} onChange={this.onRatingChange}></input>
-            <span className='add-edit-movie__rating'><Stars rating={this.state.rating} starClass='add-edit-movie__stars'/>{this.state.rating}</span>
+            <span className='add-edit-movie__rating'><Stars rating={this.state.rating} color='#F9A825'/>{this.state.rating}</span>
           </label>
           <label className='add-edit-movie__label'>Description
             <textarea className='add-edit-movie__description' ref={this.descriptionRef} rows='8' minLength='1' maxLength='300' value={this.state.description} onChange={this.onDescriptionChange}></textarea>
